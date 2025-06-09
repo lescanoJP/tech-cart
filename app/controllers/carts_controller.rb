@@ -23,7 +23,7 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    remove_from_cart_service = Cart::RemoveItem.call(cart: @current_cart, product_id: params[:id])
+    remove_from_cart_service = Cart::RemoveItem.call(cart: @current_cart, product_id: params[:product_id])
 
     return render json: remove_from_cart_service.result, serializer: CartSerializer, status: :ok if remove_from_cart_service.success?
 

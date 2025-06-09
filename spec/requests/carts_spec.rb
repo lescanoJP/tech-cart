@@ -48,7 +48,9 @@ RSpec.describe "/carts", type: :request do
   describe "POST /add_items" do
     context 'when the product already is in the cart' do
       before do
-        put '/carts/add_item', params: { product_id: product.id, quantity: 1 }
+        product 
+        cart_product
+        put '/carts/add_item', params: { product_id: product.id, quantity: 1 }, as: :json
       end
 
       it 'updates the quantity of the existing item in the cart' do
@@ -60,6 +62,8 @@ RSpec.describe "/carts", type: :request do
 
     context 'adding an item that is not in the cart yet' do
       before do
+        product
+        cart_product
         put '/carts/add_item', params: { product_id: new_product.id, quantity: 1 }, as: :json
       end
 
@@ -73,6 +77,8 @@ RSpec.describe "/carts", type: :request do
 
     context 'changing the existing item quantity to 0 or less' do
       before do
+        product
+        cart_product
         put '/carts/add_item', params: { product_id: product.id, quantity: 0 }, as: :json
       end
 
@@ -87,7 +93,9 @@ RSpec.describe "/carts", type: :request do
   describe "DELETE /carts/:product_id" do
     context 'when removing a product from cart' do
       before do
-        cart_product # Garante que o cart_product seja criado
+        product
+        cart
+        cart_product
         delete "/carts/#{product.id}", as: :json
       end
 
@@ -102,6 +110,8 @@ RSpec.describe "/carts", type: :request do
       let(:other_product) { create(:product) }
 
       before do
+        product
+        cart_product
         delete "/carts/#{other_product.id}", as: :json
       end
 
@@ -112,5 +122,4 @@ RSpec.describe "/carts", type: :request do
       end
     end
   end
-
 end

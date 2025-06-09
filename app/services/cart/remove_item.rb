@@ -6,7 +6,7 @@ class Cart::RemoveItem < BaseService
 
   def initialize(cart:, product_id:)
     @cart = cart
-    @product_id = product_id
+    @product_id = product_id.to_i
   end
 
   def call

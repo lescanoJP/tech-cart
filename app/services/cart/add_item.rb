@@ -7,7 +7,7 @@ class Cart::AddItem < BaseService
 
   def initialize(cart:, cart_params:)
     @cart = cart
-    @product_id = cart_params[:product_id],
+    @product_id = cart_params[:product_id]
     @quantity = cart_params[:quantity]
   end
 
