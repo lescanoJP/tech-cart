@@ -2,8 +2,7 @@ class CartsController < ApplicationController
   before_action :fetch_current_cart, only: %i[ add_item destroy ]
 
   def index
-    cart = Cart.last
-    
+    cart = Cart.last || Cart.create!(total_price: 0)
     render json: cart, status: :ok
   end
 
@@ -24,7 +23,7 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    remove_from_cart_service = Cart::RemoveItem.call(cart: @current_cart, product_id: params[:product_id])
+    remove_from_cart_service = Cart::RemoveItem.call(cart: @current_cart, product_id: params[:id])
 
     return render json: remove_from_cart_service.result, serializer: CartSerializer, status: :ok if remove_from_cart_service.success?
 
@@ -38,7 +37,7 @@ class CartsController < ApplicationController
   end
 
   def fetch_current_cart
-    @current_cart = Cart.last
+    @current_cart = Cart.last || Cart.create!(total_price: 0)
   end
 
 end
