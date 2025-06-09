@@ -12,7 +12,7 @@
 
     delete_abandoned_carts:
       cron: '0 * * * *'
-      class: DeleteAbandonedCarts
+      class: DeleteAbandonedCartsJob
       queue: default
       enabled: true
 
