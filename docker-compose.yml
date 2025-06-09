@@ -37,7 +37,7 @@ services:
             - REDIS_URL=redis://redis:6379/1
     sidekiq:
         build: .
-        command: bundle exec sidekiq -t 25
+        command: bundle exec sidekiq -C config/sidekiq.yml
         volumes:
             - .:/rails
             - postgres13:/var/lib/postgresql/data
@@ -48,10 +48,10 @@ services:
             - web
         environment:
             - RAILS_ENV=development
-            - POSTGRES_USER=cart_database
-            - POSTGRES_PASSWORD=strong_password123
-            - POSTGRES_DB=cart_database_development
-            - REDIS_URL=redis://redis:6379/0
+            - DATABASE_HOST=db
+            - DATABASE_USERNAME=postgres
+            - DATABASE_PASSWORD=password
+            - REDIS_URL=redis://redis:6379/1
     test:
         build: .
         command: bundle exec rspec

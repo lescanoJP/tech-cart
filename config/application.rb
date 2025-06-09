@@ -36,5 +36,6 @@ module Store
     # Host Authorization
     config.hosts.clear
     config.hosts << "www.example.com"
+    config.hosts << "localhost:3000"
   end
 end

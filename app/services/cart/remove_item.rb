@@ -2,7 +2,7 @@ class Cart::RemoveItem < BaseService
   steps :fetch_item,
         :remove_item,
         :calculate_total_price,
-        :update_total_price
+        :update_cart
 
   def initialize(cart:, product_id:)
     @cart = cart
@@ -30,7 +30,7 @@ class Cart::RemoveItem < BaseService
     @total_price = @cart.products.map(&:total_price).sum
   end
 
-  def update_total_price
-    @cart.update(total_price: @total_price)
+  def update_cart
+    @cart.update(total_price: @total_price, last_changed_at: DateTime.current)
   end
 end

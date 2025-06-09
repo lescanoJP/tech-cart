@@ -33,7 +33,7 @@ class Cart::Create < BaseService
   end
 
   def create_cart
-    @cart = Cart.new(total_price: @price)
+    @cart = Cart.new(total_price: @price, last_changed_at: DateTime.current)
     
     fail(@cart.errors.full_messages) unless @cart.save
   end

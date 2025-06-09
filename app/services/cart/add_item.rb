@@ -3,7 +3,7 @@ class Cart::AddItem < BaseService
         :fetch_product_in_cart,
         :upsert_product,
         :calculate_new_total_price,
-        :update_total_price
+        :update_cart
 
   def initialize(cart:, cart_params:)
     @cart = cart
@@ -42,8 +42,8 @@ class Cart::AddItem < BaseService
     @total_price = @cart.products.map(&:total_price).sum
   end
 
-  def update_total_price
-    @cart.update(total_price: @total_price)
+  def update_cart
+    @cart.update(total_price: @total_price, last_changed_at: DateTime.current)
   end
 
 end

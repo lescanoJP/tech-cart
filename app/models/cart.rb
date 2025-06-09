@@ -6,4 +6,6 @@ class Cart < ApplicationRecord
 
   enumerize :status, in: { active: 0, abandoned: 1 }, default: :active
 
+  scope :inactive, -> { where('last_changed_at < ?', 3.hours.ago).where(status: :active) }
+  scope :old_abandoned, -> { where(status: :abandoned).where('last_changed_at < ?', 7.days.ago) }
 end
